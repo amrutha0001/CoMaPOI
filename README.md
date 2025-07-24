@@ -41,8 +41,8 @@ CoMaPOI/
 │   └── RAG.py                 # RAG implementation
 ├── tool/                      # Tools
 │   └── base_tools.py          # Base tools
-├── dataset_all/               # Dataset directory (empty)
-└── results/                   # Results directory (empty)
+├── dataset_all/               # Dataset directory
+└── results/                   # Results directory
 ```
 
 ## Components
