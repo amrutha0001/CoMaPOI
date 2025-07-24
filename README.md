@@ -101,5 +101,3 @@ For more detailed information about each component, please refer to the document
 - [Reverse Inference](docs/RRF.md)
 - [Fine-tuning](docs/SFT_Finetune.md)
 - [Single-Agent Inference](docs/Single_Agent_Inference.md)
-
-# CoMaPOI_SIGIR2025
