@@ -7,6 +7,8 @@ While powerful, LLMs face two critical challenges when directly applied to POI p
 1.  **Lack of Spatiotemporal Understanding**: LLMs inherently struggle to comprehend raw numerical data like coordinates, time, and distance, which hinders the accurate modeling of user mobility patterns.
 2.  **Vast Candidate Space**: The enormous and unconstrained number of potential POIs in a city often leads to irrelevant or random predictions.
 
+![CoMaPOI Framework Architecture](./MODEL.png)
+
 CoMaPOI tackles these challenges by decomposing the prediction task among three specialized, collaborative agents:
 
 * 🤖 **Profiler Agent**: Converts raw numerical trajectory data into rich, semantic language descriptions, allowing the LLM to understand a user's profile and mobility patterns.
