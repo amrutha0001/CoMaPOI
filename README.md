@@ -71,6 +71,8 @@ CoMaPOI supports three datasets:
 - TKY (Tokyo)
 - CA (California)
 
+The three processed datasets mentioned above can be downloaded from the link [https://huggingface.co/datasets/Chips95/Data_CoMaPOI_SIGIR_2025]. This dataset can be directly used for the fine-tuning and testing of the LLM.
+
 ## Requirements
 
 - Python 3.8+
@@ -99,4 +101,5 @@ For more detailed information about each component, please refer to the document
 - [Reverse Inference](docs/RRF.md)
 - [Fine-tuning](docs/SFT_Finetune.md)
 - [Single-Agent Inference](docs/Single_Agent_Inference.md)
+
 # CoMaPOI_SIGIR2025
