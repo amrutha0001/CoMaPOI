@@ -1,6 +1,19 @@
-# CoMaPOI: Collaborative Multi-agent POI Prediction
+# CoMaPOI: A Collaborative Multi-Agent Framework for Next POI Prediction
 
-CoMaPOI is a framework for Point of Interest (POI) prediction using a collaborative multi-agent approach. It consists of several components for data generation, model fine-tuning, and inference.
+This repository contains the official implementation for our paper, **CoMaPOI: A Collaborative Multi-Agent Framework for Next POI Prediction**. CoMaPOI is a novel framework designed to enhance next Point-of-Interest (POI) prediction by leveraging the power of Large Language Models (LLMs) through a multi-agent collaborative approach.
+
+While powerful, LLMs face two critical challenges when directly applied to POI prediction tasks:
+
+1.  **Lack of Spatiotemporal Understanding**: LLMs inherently struggle to comprehend raw numerical data like coordinates, time, and distance, which hinders the accurate modeling of user mobility patterns.
+2.  **Vast Candidate Space**: The enormous and unconstrained number of potential POIs in a city often leads to irrelevant or random predictions.
+
+CoMaPOI tackles these challenges by decomposing the prediction task among three specialized, collaborative agents:
+
+* 🤖 **Profiler Agent**: Converts raw numerical trajectory data into rich, semantic language descriptions, allowing the LLM to understand a user's profile and mobility patterns.
+* 🎯 **Forecaster Agent**: Dynamically constrains and refines the vast candidate POI space, providing a smaller, high-quality set of likely options.
+* 🧠 **Predictor Agent**: Integrates the structured information from both the Profiler and Forecaster to generate the final, high-precision prediction.
+
+This framework not only pioneers the use of multi-agent systems for this complex spatiotemporal task but also provides a complete pipeline from data generation (using our proposed **Reverse Reasoning Fine-Tuning (RRF)** strategy) to model fine-tuning and inference. Our work demonstrates state-of-the-art performance, improving key metrics by **5% to 10%** over existing baselines on three benchmark datasets.
 
 ## Project Structure
 
