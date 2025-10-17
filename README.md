@@ -48,6 +48,11 @@ CoMaPOI/
 
 ## Components
 
+### Create Candidates
+```bash
+!python create_candidates.py --dataset nyc --num_users 500
+```
+
 ### 1. Reverse Inference (Data Generation)
 
 The reverse inference module (`inference_inverse_new.py`) generates synthetic training data based on target POIs. It uses language models to create realistic user profiles, mobility patterns, and POI preferences.
