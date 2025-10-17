@@ -1,5 +1,4 @@
-from agentscope.parsers import MarkdownJsonDictParser
-
+#from agentscope.parsers import MarkdownJsonDictParser
 import json
 import os
 import re
@@ -7,6 +6,24 @@ import logging
 from tqdm import tqdm
 from rag.RAG import *
 logging.basicConfig(level=logging.INFO)
+
+class MarkdownJsonDictParser:
+    def __init__(self, content_hint=None):
+        self.content_hint = content_hint or {}
+    
+    def parse(self, text):
+        # Try to extract JSON from markdown code block
+        match = re.search(r'```(?:json)?\s*({.*?})\s*```', str(text), re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(1))
+            except:
+                pass
+        # Try to parse as plain JSON
+        try:
+            return json.loads(str(text))
+        except:
+            return {}
 
 def extract_label_from_sample(sample):
     """Extract next_poi_id as label from the 'assistant' message in the sample."""
