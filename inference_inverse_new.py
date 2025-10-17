@@ -12,7 +12,6 @@ import re
 import random
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
-import agentscope
 from evaluate import evaluate_poi_predictions
 from utils import *
 from agents import CustomDictDialogAgent, CustomReActAgent, CustomDialogAgent
@@ -20,9 +19,30 @@ from parser_tool import extract_predicted_pois
 from tool.base_tools import *
 from prompt_provider import PromptProvider
 from ft_data import *
-from agentscope.message import Msg
-from agentscope.service import ServiceToolkit
+#import agentscope
+#from agentscope.message import Msg
+#from agentscope.service import ServiceToolkit
 
+class Msg:
+    """Simple message class"""
+    def __init__(self, name, content, role="assistant"):
+        self.name = name
+        self.content = content
+        self.role = role
+
+class ServiceToolkit:
+    """Simple service toolkit"""
+    def __init__(self):
+        self.tools = []
+    
+    def add(self, tool):
+        self.tools.append(tool)
+
+class agentscope:
+    """Stub for agentscope module"""
+    @staticmethod
+    def init(*args, **kwargs):
+        pass  # Do nothing
 
 # Helper functions for multiprocessing
 def init_agents(args):
