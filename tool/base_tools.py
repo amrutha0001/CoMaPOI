@@ -1,6 +1,29 @@
 import pandas as pd
-from agentscope.message import Msg
-from agentscope.service import (ServiceToolkit, ServiceResponse, ServiceExecStatus)
+#from agentscope.message import Msg
+#from agentscope.service import (ServiceToolkit, ServiceResponse, ServiceExecStatus)
+
+# Simplified service classes - no agentscope dependency
+class Msg:
+    def __init__(self, name, content, role="assistant"):
+        self.name = name
+        self.content = content
+        self.role = role
+
+class ServiceResponse:
+    def __init__(self, status, content):
+        self.status = status
+        self.content = content
+
+class ServiceExecStatus:
+    SUCCESS = "success"
+    FAILED = "failed"
+
+class ServiceToolkit:
+    def __init__(self):
+        self.tools = []
+    
+    def add(self, tool):
+        self.tools.append(tool)
 
 def load_user_history(history_path):
     """Load user's historical trajectory data from train_sample_processed.csv file."""
