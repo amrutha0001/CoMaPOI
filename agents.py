@@ -1,11 +1,18 @@
 from typing import Optional, Union, Sequence, Any
+#from agentscope.agents import DictDialogAgent, ReActAgent, DialogAgent
+#from agentscope.exception import ResponseParsingError
+#from agentscope.agents import AgentBase
+#from agentscope.message import Msg
+#from agentscope.parsers import RegexTaggedContentParser
 from loguru import logger
-from agentscope.parsers import ParserBase
-from agentscope.service import (
-    ServiceToolkit,  # Provides service tools
-    ServiceResponse,  # Service response object
-    ServiceExecStatus,  # Service execution status enumeration
-)
+
+#from agentscope.parsers import ParserBase
+#from agentscope.service import (
+#    ServiceToolkit,  # Provides service tools
+#    ServiceResponse,  # Service response object
+#    ServiceExecStatus,  # Service execution status enumeration
+#)
+
 # Simplified agent classes - no agentscope dependency
 class Msg:
     def __init__(self, name, content, role="assistant"):
@@ -47,6 +54,28 @@ class ResponseParsingError(Exception):
     pass
 import re
 
+# Extract POI function
+def extract_predicted_pois_combined(content):
+    """Extract POI IDs from response"""
+    poi_ids = []
+    
+    # Try JSON parsing
+    try:
+        content_json = json.loads(content)
+        next_poi_ids = content_json.get('next_poi_id', [])
+        for poi_id in next_poi_ids:
+            if isinstance(poi_id, (int, float)):
+                poi_ids.append(str(int(poi_id)))
+            elif isinstance(poi_id, str):
+                match = re.search(r'\b(\d+)\b', poi_id)
+                if match:
+                    poi_ids.append(match.group(1))
+    except:
+        # Extract numbers
+        numbers = re.findall(r'\b\d+\b', str(content))
+        poi_ids = numbers
+    
+    return poi_ids
 
 INSTRUCTION_PROMPT = """## What You Should Do:
 1. First, analyze the current situation, and determine your goal.
