@@ -466,3 +466,74 @@ def parse_user_and_trajectory_train(messages):
                     label = label_match.group(1)
 
     return user_id, subtrajectory_id, label, current_trajectory
+
+# Add access_poi_info function to utils.py
+print("Adding access_poi_info to utils.py...")
+
+with open('utils.py', 'r') as f:
+    content = f.read()
+
+# Check if already exists
+if 'def access_poi_info' in content:
+    print("✅ Function already exists!")
+else:
+    # The function to add
+    new_function = '''
+
+def access_poi_info(args, poi_id):
+    """
+    Access POI information from the POI info CSV file.
+    
+    Args:
+        args: Arguments containing dataset name
+        poi_id: POI ID to look up
+        
+    Returns:
+        tuple: (poi_id, category, latitude, longitude)
+    """
+    import pandas as pd
+    import os
+    
+    # Try to load POI info file
+    poi_info_files = [
+        f'dataset_all/{args.dataset}/{args.dataset}_poi_info.csv',
+        f'dataset_all/{args.dataset}_poi_info.csv'
+    ]
+    
+    poi_info_file = None
+    for f in poi_info_files:
+        if os.path.exists(f):
+            poi_info_file = f
+            break
+    
+    if poi_info_file:
+        try:
+            df = pd.read_csv(poi_info_file)
+            
+            # Find the POI
+            poi_row = df[df['poi_id'] == poi_id]
+            
+            if not poi_row.empty:
+                return (
+                    int(poi_row.iloc[0]['poi_id']),
+                    str(poi_row.iloc[0].get('category', 'unknown')),
+                    float(poi_row.iloc[0].get('lat', 0.0)),
+                    float(poi_row.iloc[0].get('lon', 0.0))
+                )
+        except Exception as e:
+            pass
+    
+    # Return default values if not found
+    return poi_id, 'unknown', 40.7128, -74.0060  # Default NYC coordinates
+'''
+    
+    # Add at the end
+    content = content + new_function
+    
+    # Write back
+    with open('utils.py', 'w') as f:
+        f.write(content)
+    
+    print("✅ Added access_poi_info to utils.py!")
+
+print("\n🎯 Next: Restart runtime and run again")
