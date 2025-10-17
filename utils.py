@@ -420,3 +420,49 @@ Respond with a JSON dictionary in a markdown's fenced code block as follows:
 ```"""
 
     return user_id, prompt, label
+
+def parse_user_and_trajectory_train(messages):
+    """
+    Parse user ID, subtrajectory ID, label, and trajectory from messages for training.
+    
+    Args:
+        messages: List of message dictionaries
+        
+    Returns:
+        tuple: (user_id, subtrajectory_id, label, current_trajectory)
+    """
+    user_id = None
+    subtrajectory_id = 0
+    label = None
+    current_trajectory = None
+
+    for msg in messages:
+        if msg.get('role') == 'user':
+            content_msg = msg.get('content', '')
+            
+            # Extract user ID
+            user_match = re.search(r'"user_id":\s*"?(\d+)"?', content_msg)
+            if user_match:
+                user_id = user_match.group(1)
+            
+            # Extract subtrajectory ID
+            subtraj_match = re.search(r'"subtrajectory_id":\s*"?(\d+)"?', content_msg)
+            if subtraj_match:
+                subtrajectory_id = int(subtraj_match.group(1))
+            
+            current_trajectory = content_msg
+            
+        elif msg.get('role') == 'assistant':
+            content_msg = msg.get('content', '')
+            try:
+                data = json.loads(content_msg)
+                if isinstance(data, dict) and 'next_poi_id' in data:
+                    label = data['next_poi_id']
+                elif isinstance(data, int):
+                    label = data
+            except json.JSONDecodeError:
+                label_match = re.search(r'"next_poi_id":\s*(\d+)', content_msg)
+                if label_match:
+                    label = label_match.group(1)
+
+    return user_id, subtrajectory_id, label, current_trajectory
