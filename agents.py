@@ -4,6 +4,8 @@ from typing import Optional, Union, Sequence, Any
 #from agentscope.agents import AgentBase
 #from agentscope.message import Msg
 #from agentscope.parsers import RegexTaggedContentParser
+import json
+import re
 from loguru import logger
 
 #from agentscope.parsers import ParserBase
@@ -25,6 +27,10 @@ class AgentBase:
         self.name = name
         self.sys_prompt = sys_prompt
         self.model_config_name = model_config_name
+        self.memory = []
+
+    def clear(self):
+        """Clear memory"""
         self.memory = []
         
 class DictDialogAgent(AgentBase):
@@ -52,7 +58,6 @@ class ReActAgent(AgentBase):
 
 class ResponseParsingError(Exception):
     pass
-import re
 
 # Extract POI function
 def extract_predicted_pois_combined(content):
@@ -202,7 +207,7 @@ class CustomDictDialogAgent(DictDialogAgent):
         name: str,
         sys_prompt: str,
         model_config_name: str,
-        parser: Optional[ParserBase] = None,
+        parser: Optional[object] = None,
         memory_size: int = 0,
     ):
         super().__init__(
@@ -254,7 +259,7 @@ class CustomReActAgent(ReActAgent):
         name: str,
         sys_prompt: str,
         model_config_name: str,
-        service_toolkit: Optional[ServiceToolkit] = None,
+        service_toolkit: Optional[object] = None,
         instruction_prompt: str = INSTRUCTION_PROMPT,
         memory_size: int = 0,
     ):
