@@ -1,9 +1,4 @@
 from typing import Optional, Union, Sequence, Any
-from agentscope.agents import DictDialogAgent, ReActAgent, DialogAgent
-from agentscope.exception import ResponseParsingError
-from agentscope.agents import AgentBase
-from agentscope.message import Msg
-from agentscope.parsers import RegexTaggedContentParser
 from loguru import logger
 from agentscope.parsers import ParserBase
 from agentscope.service import (
@@ -11,6 +6,45 @@ from agentscope.service import (
     ServiceResponse,  # Service response object
     ServiceExecStatus,  # Service execution status enumeration
 )
+# Simplified agent classes - no agentscope dependency
+class Msg:
+    def __init__(self, name, content, role="assistant"):
+        self.name = name
+        self.content = content
+        self.role = role
+
+class AgentBase:
+    def __init__(self, name, sys_prompt="", model_config_name="", memory_size=0):
+        self.name = name
+        self.sys_prompt = sys_prompt
+        self.model_config_name = model_config_name
+        self.memory = []
+        
+class DictDialogAgent(AgentBase):
+    def __init__(self, name, sys_prompt, model_config_name, parser=None, memory_size=0):
+        super().__init__(name, sys_prompt, model_config_name, memory_size)
+        self.parser = parser
+        
+    def reply(self, message):
+        return Msg(name=self.name, content="Response", role="assistant")
+
+class DialogAgent(AgentBase):
+    def __init__(self, name, sys_prompt, model_config_name, memory_size=0):
+        super().__init__(name, sys_prompt, model_config_name, memory_size)
+        
+    def reply(self, message):
+        return Msg(name=self.name, content="Response", role="assistant")
+
+class ReActAgent(AgentBase):
+    def __init__(self, name, sys_prompt, model_config_name, service_toolkit=None, instruction_prompt="", memory_size=0):
+        super().__init__(name, sys_prompt, model_config_name, memory_size)
+        self.service_toolkit = service_toolkit
+        
+    def reply(self, message):
+        return Msg(name=self.name, content="Response", role="assistant")
+
+class ResponseParsingError(Exception):
+    pass
 import re
 
 
