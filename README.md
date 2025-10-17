@@ -50,7 +50,7 @@ CoMaPOI/
 
 ### Create Candidates
 ```bash
-!python create_candidates.py --dataset nyc --num_users 500
+python create_candidates.py --dataset nyc --num_users 500
 ```
 
 ### 1. Reverse Inference (Data Generation)
