@@ -26,6 +26,7 @@ CoMaPOI/
 ├── agents.py                  # Agent definitions
 ├── evaluate.py                # Evaluation functions
 ├── finetune_sft_new.py        # Fine-tuning script
+├── create_candidates.py  
 ├── inference_forward_new.py   # Multi-agent inference script
 ├── inference_inverse_new.py   # Reverse inference script
 ├── inference_ori_new.py       # Single-agent inference script
